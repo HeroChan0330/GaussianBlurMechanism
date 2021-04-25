@@ -5,7 +5,7 @@
 using namespace std;
 
 float*createGaussianKernel(int radius){
-    float sigma=radius/3;
+    float sigma=radius/2;
     float weightsSum=0;
     int weightsLen=radius*2+1;
     float *weights=new float[weightsLen*weightsLen];
@@ -32,31 +32,59 @@ float*createGaussianKernel(int radius){
 
 int main()
 {
-    BMP bmp=BMP::FromFile("1080P.bmp");
-
     printf("Begin\n");
 
 
-    //均值模糊
-    /*
-    bmp.AverageBlur2(50);
-    bmp.Save("1080POutputA.bmp");
-    */
+    BMP bmp1=BMP::FromFile("1080P.bmp");
+    //均值模糊，无优化
+    uint32_t t=clock();
+    bmp1.AverageBlur(10);
+    bmp1.Save("1080POutputA1.bmp");
+    cout<<"Time cost(AverageBlur):"<<clock()-t<<"ms"<<endl;
 
-    //3次均值模糊模拟高斯模糊
-    /*
-    bmp.AverageBlur2(50);
-    bmp.AverageBlur2(50);
-    bmp.AverageBlur2(50);
-    bmp.Save("1080POutputA2.bmp");
-    */
 
+    BMP bmp2=BMP::FromFile("1080P.bmp");
+    //均值模糊，行模糊+列模糊
+    t=clock();
+    bmp2.AverageBlur2(10);
+    bmp2.Save("1080POutputA2.bmp");
+    cout<<"Time cost(AverageBlur2):"<<clock()-t<<"ms"<<endl;
+
+    BMP bmp3=BMP::FromFile("1080P.bmp");
+    //均值模糊，累加优化
+    t=clock();
+    bmp3.AverageBlur3(10);
+    bmp3.Save("1080POutputA3.bmp");
+    cout<<"Time cost(AverageBlur3):"<<clock()-t<<"ms"<<endl;
+
+
+    BMP bmp4=BMP::FromFile("1080P.bmp");
     //高斯模糊
-    /*
-    float*weights=createGaussianKernel(50);
-    bmp.GaussianBlur(weights,50);
-    bmp.Save("1080POutputG.bmp");
-    */
+    t=clock();
+    float*weights=createGaussianKernel(10);
+    bmp4.GaussianBlur(weights,10);
+    bmp4.Save("1080POutputG.bmp");
+    delete weights;
+    cout<<"Time cost(GaussianBlur):"<<clock()-t<<"ms"<<endl;
+
+
+    BMP bmp5=BMP::FromFile("1080P.bmp");
+    //大半径高斯模糊
+    t=clock();
+    weights=createGaussianKernel(50);
+    bmp4.GaussianBlur(weights,50);
+    bmp4.Save("1080POutputG2.bmp");
+    delete weights;
+    cout<<"Time cost(GaussianBlur r=50):"<<clock()-t<<"ms"<<endl;
+
+    BMP bmp6=BMP::FromFile("1080P.bmp");
+    //多次优化均值模糊模拟高斯模糊
+    t=clock();
+    bmp3.AverageBlur3(50);
+    bmp3.AverageBlur3(50);
+    bmp3.AverageBlur3(50);
+    bmp3.Save("1080POutputA4.bmp");
+    cout<<"Time cost(AverageBlur3×3 r=50):"<<clock()-t<<"ms"<<endl;
 
     printf("Finished\n");
     return 0;

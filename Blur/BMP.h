@@ -21,10 +21,11 @@ public:
     void Save(char*path);
     BMP Clone();
 
-    void AverageBlur(int radius);//均值模糊
+    void AverageBlur(int radius);//均值模糊，无优化
 
     void GaussianBlur(float*weights,int radius);
-    void AverageBlur2(int radius);//优化均值模糊
+    void AverageBlur2(int radius);//行模糊+列模糊优化
+    void AverageBlur3(int radius);//累加优化
 private:
 
 

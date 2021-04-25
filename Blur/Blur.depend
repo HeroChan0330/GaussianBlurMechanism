@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1619271083 source:c:\users\子豪\desktop\blurarticle\blur\main.cpp
+1619328079 source:c:\users\子豪\desktop\blurarticle\blur\main.cpp
 	<iostream>
 	"BMP.h"
 	<time.h>
 
-1619270962 c:\users\子豪\desktop\blurarticle\blur\bmp.h
+1619327519 c:\users\子豪\desktop\blurarticle\blur\bmp.h
 	"BMPStructer.h"
 	<stdlib.h>
 	<stdio.h>
@@ -14,6 +14,6 @@
 1520294966 c:\users\子豪\desktop\blurarticle\blur\bmpstructer.h
 	<stdint.h>
 
-1619263135 source:c:\users\子豪\desktop\blurarticle\blur\bmp.cpp
+1619327099 source:c:\users\子豪\desktop\blurarticle\blur\bmp.cpp
 	"BMP.h"
 
